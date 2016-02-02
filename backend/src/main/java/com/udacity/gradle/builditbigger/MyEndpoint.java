@@ -9,6 +9,7 @@ package com.udacity.gradle.builditbigger;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.udacity.gradle.Joker;
 
 import javax.inject.Named;
 
@@ -29,6 +30,19 @@ public class MyEndpoint {
     public MyBean sayHi(@Named("name") String name) {
         MyBean response = new MyBean();
         response.setData("Hi, " + name);
+
+        return response;
+    }
+
+    /** An endpoint method that generates a joke */
+    @ApiMethod(name = "getJoke")
+    public MyBean getJoke() {
+        MyBean response = new MyBean();
+
+        //Use dependency with Java jokes library
+        Joker joker = new Joker();
+        String joke = joker.getJoke();
+        response.setData(joke);
 
         return response;
     }
