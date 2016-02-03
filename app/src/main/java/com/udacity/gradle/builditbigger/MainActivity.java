@@ -1,22 +1,31 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.udacity.gradle.androidjokeslib.JokeActivity;
+
 
 public class MainActivity extends AppCompatActivity implements EndpointsAsyncResponse {
 
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("BuildItBigger");
     }
 
 
@@ -44,9 +53,7 @@ public class MainActivity extends AppCompatActivity implements EndpointsAsyncRes
 
     public void tellJoke(View view){
 
-        //Check for network connection here
-
-
+        //TODO Check for network connection here
         EndpointsAsyncTask e = new EndpointsAsyncTask();
         e.delegate = this;
         e.execute(new Pair<Context, String>(this, ""));
@@ -56,8 +63,12 @@ public class MainActivity extends AppCompatActivity implements EndpointsAsyncRes
 
     @Override
     public void processFinish(String output) {
-        //Here you will receive the result fired from async class
 
+        //Here you will receive the result fired from async class
         Toast.makeText(this, output, Toast.LENGTH_LONG).show();
+
+        //Launch activity
+        Intent intent = new Intent(this, JokeActivity.class);
+        startActivity(intent);
     }
 }
