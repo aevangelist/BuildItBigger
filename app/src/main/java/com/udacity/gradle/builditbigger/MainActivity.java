@@ -2,6 +2,8 @@ package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -60,15 +62,27 @@ public class MainActivity extends AppCompatActivity implements EndpointsAsyncRes
 
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
     @Override
     public void processFinish(String output) {
 
         //Here you will receive the result fired from async class
-        Toast.makeText(this, output, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, output, Toast.LENGTH_LONG).show();
 
         //Launch activity
-        Intent intent = new Intent(this, JokeActivity.class);
-        startActivity(intent);
+        if (!output.equals("") && output != null){
+            Intent intent = new Intent(this, JokeActivity.class);
+            intent.putExtra("joke", output);
+            startActivity(intent);
+        }else{
+            Toast.makeText(this, "The genie is sleeping", Toast.LENGTH_LONG).show();
+        }
+
     }
 }
