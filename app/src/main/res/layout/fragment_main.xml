@@ -67,7 +67,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="180dp"></LinearLayout>
+        android:layout_height="150dp"></LinearLayout>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

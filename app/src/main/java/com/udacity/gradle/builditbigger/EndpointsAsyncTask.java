@@ -60,4 +60,9 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, S
         //Toastie
         //Toast.makeText(context, result, Toast.LENGTH_LONG).show();
     }
+
+    public EndpointsAsyncTask setListener(EndpointsAsyncResponse listener) {
+        this.delegate = listener;
+        return this;
+    }
 }
